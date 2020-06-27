@@ -1,17 +1,17 @@
 import { Router } from "express";
 import {getByCampain,
-   create,
+   createOne,
    updateOne,
-   deleteOne} from './donation.controllers';
+   removeOne} from './donation.controllers';
 
 const router = Router();
 
 router.route("/:campain")
 .put(updateOne)
-.delete(deleteOne);
+.delete(removeOne);
 
 router.route("/")
    .get(getByCampain)
-   .post(create);
+   .post(createOne);
 
 export default router;

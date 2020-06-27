@@ -1,19 +1,19 @@
 import { Router } from "express";
 import {getOne,
    getMany,
-   create,
-   updateByName,
-   deleteByName} from './group.controllers';
+   createOne,
+   updateOne,
+   removeOne} from './group.controllers';
 
 const router = Router();
 
 router.route("/:groupName")
    .get(getOne)
-   .put(updateByName)
-   .delete(deleteByName);
+   .put(updateOne)
+   .delete(removeOne);
 
 router.route("/")
    .get(getMany)
-   .post(create);
+   .post(createOne);
 
 export default router;

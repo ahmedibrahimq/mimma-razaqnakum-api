@@ -1,17 +1,17 @@
 import { Router } from "express";
-import {getAll,
-   create,
+import {getMany,
+   createOne,
    updateOne,
-   deleteOne} from './tag.controllers';
+   removeOne} from './tag.controllers';
 
 const router = Router();
 
 router.route("/:title")
    .put(updateOne)
-   .delete(deleteOne);
+   .delete(removeOne);
 
 router.route("/")
-   .get(getAll)
-   .post(create);
+   .get(getMany)
+   .post(createOne);
 
 export default router;

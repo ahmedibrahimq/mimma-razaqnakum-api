@@ -1,25 +1,33 @@
 import { query } from '../../utils/db';
 
-export const get = (data, callback) => {
+export const getOne = (req, callback) => {
+   const data = [req.params.groupName];
+   
    query("SELECT * FROM groups WHERE group_name = $1", data, callback);
 }
 
-export const getMany = (callback) => {
+export const getMany = (_, callback) => {
    query("SELECT * FROM groups", callback);
 }
 
-export const create = (data, callback) => {
-   query("INSERT INTO groups VALUES ($1, $2)", Object.values(data), callback);
+export const createOne = (req, callback) => {
+   const data = Object.values(req.body);
+
+   query("INSERT INTO groups VALUES ($1, $2, $3) RETURNING *", data, callback);
 }
 
-export const update = (data, callback) => {
-   query("UPDATE groups SET logo = $2 WHERE group_name = $1", Object.values(data), callback);
+export const updateOne = (req, callback) => {
+   const data = Object.values(req.body);
+
+   query("UPDATE groups SET (logo, address) = ($2, $3) WHERE group_name = $1 RETURNING *", data, callback);
 }
 
-export const remove = (data, callback) => {
-   query("DELETE FROM groups WHERE group_name = $1", data, callback);
+export const removeOne = (req, callback) => {
+   const data = [req.params.groupName];
+
+   query("DELETE FROM groups WHERE group_name = $1 RETURNING *", data, callback);
 }
 
 export default {
-   get, create, getMany, update, remove
+   getOne, createOne, getMany, updateOne, removeOne
 }

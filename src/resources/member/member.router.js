@@ -1,17 +1,17 @@
 import { Router } from "express";
 import {getByGroup,
-   create,
+   createOne,
    updateOne,
-   deleteOne} from './member.controllers';
+   removeOne} from './member.controllers';
 
 const router = Router();
 
 router.route("/:username")
    .put(updateOne)
-   .delete(deleteOne);
+   .delete(removeOne);
 
 router.route("/")
    .get(getByGroup)
-   .post(create);
+   .post(createOne);
 
 export default router;
