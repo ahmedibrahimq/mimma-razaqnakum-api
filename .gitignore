@@ -1,0 +1,13 @@
+node_modules
+.cache/
+dist/
+.env
+.DS_Store
+coverage/
+.vscode/
+
+# Yarn https://github.com/yarnpkg/berry/issues/454#issuecomment-530312089
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+.pnp.*
