@@ -7,7 +7,8 @@ if (node_env !== 'production') {
 const config = {
    development : {
       URI: process.env.DATABASE_URL,
-      PORT: process.env.PORT || 3000
+      PORT: process.env.PORT || 3000,
+      MORGAN_FORMAT: 'dev'
    }
 }
 
