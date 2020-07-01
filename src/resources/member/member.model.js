@@ -1,7 +1,7 @@
 import { query } from '../../utils/db';
 
 export const getByGroup = (req, callback) => {
-   const data = [req.body.groupName];
+   const data = [req.query.groupName];
 
    query("SELECT * FROM members WHERE group_name = $1", data, callback);
 }

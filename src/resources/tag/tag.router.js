@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {getMany,
+import {getByGroup,
    createOne,
    updateOne,
    removeOne} from './tag.controllers';
@@ -11,7 +11,7 @@ router.route("/:title")
    .delete(removeOne);
 
 router.route("/")
-   .get(getMany)
+   .get(getByGroup)
    .post(createOne);
 
 export default router;

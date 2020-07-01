@@ -1,7 +1,9 @@
 import { query } from '../../utils/db';
 
-export const getMany = (_, callback) => {
-   query("SELECT * FROM tags", callback);
+export const getByGroup = (req, callback) => {
+   const data = [req.query.group];
+   
+   query("SELECT ARRAY_AGG(DISTINCT tag) AS tags FROM campains_tags WHERE campain_group = $1", data, callback);
 }
 
 export const createOne = (req, callback) => {
@@ -23,5 +25,5 @@ export const removeOne = (req, callback) => {
 }
 
 export default {
-   getMany, createOne, updateOne, removeOne
+   getByGroup, createOne, updateOne, removeOne
 }

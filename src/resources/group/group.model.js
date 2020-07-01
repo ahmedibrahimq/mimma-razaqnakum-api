@@ -6,8 +6,11 @@ export const getOne = (req, callback) => {
    query("SELECT * FROM groups WHERE group_name = $1", data, callback);
 }
 
+// GROUP BY g.group_name is enough as group_name is a primary_key https://stackoverflow.com/questions/50606295/postgresql-group-by-all-fields/50606823#50606823
 export const getMany = (_, callback) => {
-   query("SELECT * FROM groups", callback);
+   query(`SELECT g.*, count(m.username) AS members_count 
+   FROM groups g INNER JOIN members m ON g.group_name = m.group_name
+   GROUP BY g.group_name`, callback);
 }
 
 export const createOne = (req, callback) => {
