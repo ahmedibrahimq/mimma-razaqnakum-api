@@ -3,7 +3,12 @@ import { query } from '../../utils/db';
 export const getByGroup = (req, callback) => {
    const data = [req.query.group];
    
-   query("SELECT ARRAY_AGG(DISTINCT tag) AS tags FROM campains_tags WHERE campain_group = $1", data, callback);
+   query(`
+   SELECT DISTINCT ON(t.title) t.*
+   FROM   tags t
+   JOIN   campains_tags ct
+   ON     t.title = ct.tag
+   WHERE  ct.campain_group = $1`, data, callback);
 }
 
 export const createOne = (req, callback) => {
