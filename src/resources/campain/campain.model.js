@@ -89,15 +89,16 @@ export const getMany = (req, callback) => {
 export const updateOne = (req, callback) => {
    const data = Object.values(req.body);
    query(`UPDATE campains 
-   SET (details, expires_at, status, money_collected, pics) = ($3, $4, $5, $6, $7)
+   SET (details, expires_at, status, pics) = ($3, $4, $5, $6)
    WHERE title = $1 AND group_name = $2
    RETURNING *`, data, callback);
 }
 
 export const removeOne = (req, callback) => {
-   
-   const data = [req.body.title, req.body.groupName];
-   query("DELETE FROM campains WHERE title = $1 AND group_name = $2 RETURNING *", data, callback);
+   const data = [req.body.title, req.body.groupName, new Date()];
+   query(`UPDATE campains set deleted_at = $3 
+   WHERE title = $1 AND group_name = $2 RETURNING *`, data, callback);
+   // query("DELETE FROM campains WHERE title = $1 AND group_name = $2 RETURNING *", data, callback);
 }
 
 export default {
