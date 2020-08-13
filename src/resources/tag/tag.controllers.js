@@ -1,7 +1,7 @@
 import Model from './tag.model';
-import { C, RUD } from "../../utils/crud";
+import cRUD from "../../utils/crud";
 
-export const createOne    = C(Model.createOne);
-export const getByGroup   = RUD(Model.getByGroup);
-export const updateOne    = RUD(Model.updateOne);
-export const removeOne    = RUD(Model.removeOne);
+export const createOne    = cRUD(Model.createOne, 201);
+export const getByGroup   = cRUD(Model.getByGroup, 200);
+export const updateOne    = cRUD(Model.updateOne, 200);
+export const removeOne    = cRUD(Model.removeOne, 200);

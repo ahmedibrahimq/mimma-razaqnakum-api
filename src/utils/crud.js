@@ -1,21 +1,12 @@
-import { callback200, callback201 } from "./controllers";
-
-export const get = getCall => (req, res) => {
-  getCall(req, callback200(res));
+const cRUDCallback = (res, status) => (err, result) => {
+  if (err) {
+     return res.status(400).end(err.message);
+  }
+  return res.status(status).json(result.rows);
 }
 
-export const update = updateCall => (req, res) => {
-  updateCall(req, callback200(res));
+export const cRUD = (dbCall, status) => (req, res) => {
+  dbCall(req, cRUDCallback(res, status));
 }
 
-export const remove = removeCall => (req, res) => {
-  removeCall(req, callback200(res));
-}
-
-export const C = createCall => (req, res) => { 
-  createCall(req, callback201(res));
-}
-
-export const RUD = dbCall => (req, res) => {
-  dbCall(req, callback200(res));
-}
+export default cRUD;

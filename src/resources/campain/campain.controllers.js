@@ -1,8 +1,8 @@
 import model from './campain.model';
-import { C, RUD } from "../../utils/crud";
+import cRUD from "../../utils/crud";
 
-export const createOne = C(model.createOne);
-export const getOne    = RUD(model.getOne);
-export const getMany   = RUD(model.getMany);
-export const updateOne = RUD(model.updateOne);
-export const removeOne = RUD(model.removeOne);
+export const createOne = cRUD(model.createOne, 201);
+export const getOne    = cRUD(model.getOne, 200);
+export const getMany   = cRUD(model.getMany, 200);
+export const updateOne = cRUD(model.updateOne, 200);
+export const removeOne = cRUD(model.removeOne, 200);
