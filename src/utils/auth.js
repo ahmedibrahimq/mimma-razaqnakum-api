@@ -16,11 +16,11 @@ export function signJWT(payload, secret=config.JWT_SECRET, exp=config.JWT_EXPIRE
 }
 
 export function verifyJWTAndGetPayload(token, secret=config.JWT_SECRET) {
-  let user = undefined;
+  let decodedPayload = undefined;
   jwt.verify(token, secret, function decodePayload(err, payload) {
-    if (!err) user = payload.user;
+    if (!err) decodedPayload = payload;
   });
-  return user;
+  return decodedPayload;
 }
 
 export function refreshJWT(currentJWT, secret=config.JWT_SECRET, exp=config.JWT_EXPIRES_IN) {

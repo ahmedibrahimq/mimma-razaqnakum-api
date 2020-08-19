@@ -6,10 +6,17 @@ export const getByGroup = (req, callback) => {
    query("SELECT * FROM members WHERE group_name = $1", data, callback);
 }
 
+export const getByUsername = (req, callback) => {
+   const data = [req.body.username];
+   
+   query(`SELECT * FROM members WHERE username = $1`, data, callback);
+}
+
 export const createOne = (req, callback) => {
    const data = Object.values(req.body);
    
-   query("INSERT INTO members VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *", data, callback);
+   query(`INSERT INTO members (username, group_name, full_name, avatar, phone, landline, fb_acc, hash_pwd)
+   VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`, data, callback);
 }
 
 export const updateOne = (req, callback) => {

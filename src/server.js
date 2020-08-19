@@ -9,6 +9,7 @@ import campainRouter from './resources/campain/campain.router';
 import tagRouter from './resources/tag/tag.router';
 import donationRouter from './resources/donation/donation.router';
 import memberRouter from './resources/member/member.router';
+import { jwtAuth, requireLogin, register, login, refreshToken } from './utils/middlewares';
 
 const app = express();
 
@@ -17,9 +18,12 @@ app.disable('x-powered-by')
 app.use(cors())
 app.use(json());
 app.use(morgan(config.MORGAN_FORMAT));
+app.use(jwtAuth());
 
 // API routes
-// TODO: app.use('api', protect);
+app.use('/api/auth/register', register);
+app.use('/api/auth/login', login);
+app.use('/api/auth/refresh', refreshToken);
 app.use('/api/group', groupRouter);
 app.use('/api/campain', campainRouter);
 app.use('/api/tag', tagRouter);
