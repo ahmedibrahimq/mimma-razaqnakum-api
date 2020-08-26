@@ -1,10 +1,10 @@
 import { verifyJWTAndGetPayload, hashPassword, compairePwd, signJWT, refreshJWT } from "./auth";
-import { getByUsername } from "../resources/member/member.model";
+import { getByUsername, createOne } from "../resources/member/member.model";
 
  export const jwtAuth = () => function verifyToken(req,res,next) {
   req.user = undefined;
   if (req.headers && req.headers.authorization) {
-    [bearer, token] = req.headers.authorization.split(' ');
+    const [bearer, token] = req.headers.authorization.split(' ');
     if (token && bearer== 'Bearer') {
       const payload = verifyJWTAndGetPayload(token);
       if (payload)
@@ -35,7 +35,7 @@ export function login(req, res) {
     if (!user || !req.body.password)
       return res.status(401).end("Invalid login data!");
     
-    isCorrectPassword = compairePwd(req.body.password, user.hash_pwd);
+    const isCorrectPassword = compairePwd(req.body.password, user.hash_pwd);
 
     if (!isCorrectPassword)
       return res.status(401).end("Invalid login data!");
@@ -48,10 +48,14 @@ export function login(req, res) {
 }
 
 export function refreshToken(req, res) {
-  const token = req.headers.authorization.split(' ')[1];
-  const newToken = refreshJWT(token);
-  if (newToken)
-    return res.status(200).json({token});
+  if (req.headers && req.headers.authorization) {
+    const token = req.headers.authorization.split(' ')[1];
+    const newToken = refreshJWT(token);
+    if (newToken)
+      return res.status(200).json({newToken});
+    else
+      return res.status(400).end();
+  }
   else
     return res.status(400).end();
 }

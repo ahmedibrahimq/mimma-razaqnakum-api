@@ -19,18 +19,20 @@ export function verifyJWTAndGetPayload(token, secret=config.JWT_SECRET) {
   let decodedPayload = undefined;
   jwt.verify(token, secret, function decodePayload(err, payload) {
     if (!err) decodedPayload = payload;
+    else console.error(err.message);
   });
   return decodedPayload;
 }
 
 export function refreshJWT(currentJWT, secret=config.JWT_SECRET, exp=config.JWT_EXPIRES_IN) {
   const payload = verifyJWTAndGetPayload(currentJWT, secret);
+
+  if(!payload) return undefined;
   
   const nowInSec = Math.round(new Date()/1000);
   const expiresIN = payload.exp - nowInSec;
+  const enoughTimeElapsed = expiresIN < config.JWT_REFRESH_THRESHOLD;
   
-  const enoughTimeElapsed = expiresIN > config.JWT_REFRESH_THRESHOLD;
-
   let newToken = undefined;
   if (enoughTimeElapsed) {
     newToken = signJWT(payload.user, secret, exp);
