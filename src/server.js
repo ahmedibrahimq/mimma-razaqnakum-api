@@ -21,9 +21,9 @@ app.use(morgan(config.MORGAN_FORMAT));
 app.use(jwtAuth());
 
 // API routes
-app.use('/api/auth/register', register);
-app.use('/api/auth/login', login);
-app.use('/api/auth/refresh', refreshToken);
+app.post('/api/auth/register', register);
+app.post('/api/auth/login', login);
+app.post('/api/auth/refresh', refreshToken);
 app.use('/api/group', groupRouter);
 app.use('/api/campain', campainRouter);
 app.use('/api/tag', tagRouter);
