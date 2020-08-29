@@ -15,8 +15,8 @@ export const getByUsername = (req, callback) => {
 export const createOne = (req, callback) => {
    const data = Object.values(req.body);
    
-   query(`INSERT INTO members (username, group_name, full_name, avatar, phone, landline, fb_acc, hash_pwd)
-   VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`, data, callback);
+   query(`INSERT INTO members (username, group_name, full_name, avatar, phone, landline, fb_acc, hash_pwd, email)
+   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`, data, callback);
 }
 
 export const updateOne = (req, callback) => {
